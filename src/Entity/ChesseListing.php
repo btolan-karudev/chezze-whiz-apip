@@ -4,13 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ChesseListingRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
  *     collectionOperations={"get", "post"},
  *     itemOperations={
- *     "get"={"path"="/i'aime'cheses/{id}"},
+ *     "get",
  *     "put"
  * },
  *     shortName="cheeses"
@@ -103,6 +104,11 @@ class ChesseListing
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function getCreatedAtAgo(): string
+    {
+        return Carbon::instance($this->getCreatedAt())->diffForHumans();
     }
 
     public function getIsPublished(): ?bool
