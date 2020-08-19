@@ -59,7 +59,7 @@ class ChesseListing
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPublished;
+    private $isPublished = false;
 
     public function __construct()
     {
@@ -88,7 +88,18 @@ class ChesseListing
         return $this->description;
     }
 
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
+        return $this;
+    }
+
+    /**
+     * The description of cheese as raw text
+     *
+     * @Groups({"chesse_listing:write"})
+     */
     public function setTextDescription(string $description): self
     {
         $this->description = nl2br($description);
@@ -113,6 +124,11 @@ class ChesseListing
         return $this->createdAt;
     }
 
+    /**
+     * How long ago in text that this cheese listing was added
+     *
+     * @Groups({"chesse_listing:read"})
+     */
     public function getCreatedAtAgo(): string
     {
         return Carbon::instance($this->getCreatedAt())->diffForHumans();
