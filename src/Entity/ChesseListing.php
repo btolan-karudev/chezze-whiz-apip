@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ChesseListingRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
@@ -13,7 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     itemOperations={
  *     "get",
  *     "put"
- * },
+ *     },
+ *     normalizationContext={"groups"={"chesse_listing:read"}},
  *     shortName="cheeses"
  * )
  * @ORM\Entity(repositoryClass=ChesseListingRepository::class)
@@ -29,11 +31,13 @@ class ChesseListing
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"chesse_listing:read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"chesse_listing:read"})
      */
     private $description;
 
@@ -122,4 +126,5 @@ class ChesseListing
 
         return $this;
     }
+
 }
